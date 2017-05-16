@@ -4,15 +4,21 @@
 
 /* ------ Funcoes relacionadas a Filas */
 // Cria nova fila vazia
-void criaFila (tFila *Fila) { printf("essa funcao foi 1\n");
+void criaFila (tFila *Fila) {
 	Fila->First = (tCFila *)malloc(sizeof(tCFila));
 	Fila->Last = Fila->First;
 	Fila->First->Nxt = NULL;
 }
 //.
 
+// Confere se a fila está vazia
+int filaVazia (tFila Fila) {
+	return(Fila.First == Fila.Last);
+}
+// .
+
 // Enfileirar nova pessoa
-void enfileiraPessoa (tFila *Fila, int qtd, int s) { printf("essa funcao foi 2\n");
+void enfileiraPessoa (tFila *Fila, int qtd, int s) {
 	int i;
 	for (i = 0; i < qtd; i++) {
 		Fila->Last->Nxt = (tCFila *)malloc(sizeof(tCFila));
@@ -26,9 +32,8 @@ void enfileiraPessoa (tFila *Fila, int qtd, int s) { printf("essa funcao foi 2\n
 //.
 
 // Desenfileirar uma pessoa
-void desenfileiraPessoa (tFila *Fila) { printf("essa funcao foi 3\n");
+void desenfileiraPessoa (tFila *Fila) {
 	if (Fila->First == Fila->Last) {
-		printf("nao rolou Desenfileirar\n");
 		return;
 	}
 	pFila pointer = Fila->First;
@@ -38,33 +43,30 @@ void desenfileiraPessoa (tFila *Fila) { printf("essa funcao foi 3\n");
 //.
 
 // Implementacao da fila de servir alimentos, para complementar as 4 iterações 
-void servingTime (tFila *Fila, int *tamFila, int *contServ) { printf("essa funcao foi 4\n");
+void servingTime (tFila *Fila, int *tamFila, int *contServ) { 
 	int i = 0, tamanho = *tamFila;
 	pFila pointer;
 	pointer = Fila->First->Nxt;
-printf("queeee\n");
 	// varre toda a fila aumentando em uma unidade de tempo o tempo gasto servindo
-	while (i < tamanho) { printf("han\n");
-		pointer->serving++; printf("ajuda lusiano\n");
-		pointer = pointer->Nxt;printf("qye\n");
+	while (i < tamanho) { 
+		pointer->serving++; 
+		pointer = pointer->Nxt;
 		i++;
 	}
 	// .
-
-	i = 0;printf("pfvr\n");
-	pointer = Fila->First->Nxt; printf("que\n");
+	i = 0;
+	pointer = Fila->First->Nxt; 
 	// varre a fila em busca dos totalmente servido, desenfileira e finaliza o servico geral
-	while (i < tamanho) { printf("essa funcao foi 5\n");
-		printf("user %d\n", pointer->serving);
+	while (i < tamanho) { 
 		if (pointer->serving == 4) {
 			desenfileiraPessoa(Fila);
-			*tamFila--;
-			*contServ++;
+			*tamFila -= 1;
+			*contServ += 1;
 		}
 		pointer = pointer->Nxt;
 		i++;
 	}
-
+	free(pointer);
 	// varre fila
 	// aumenta o int serving de cada um
 	// varre de novo
@@ -76,34 +78,40 @@ printf("queeee\n");
 
 /* ------ Funcoes relacionadas a Pilhas */
 // Cria nova pilha vazia
-void criaPilha (tPilha *Pilha) { printf("essa funcao foi 6\n");
+void criaPilha (tPilha *Pilha) {
 	Pilha->Top = (tCPilha *)malloc(sizeof(tCPilha));
 	Pilha->Bottom = Pilha->Top;
 	Pilha->Top->Nxt = NULL;
-	Pilha->size = 30; // supondo que a pilha comece cheia
+	Pilha->size = 0;
 }
 //.
-// Empilha 10 novas bandejas
-void empilhaBandeja (tPilha *Pilha, int *empty) { printf("essa funcao foi 7\n");
-	*empty = 0;
-	pPilha pointer  = (tCPilha *)malloc(sizeof(tCPilha));
-	pointer->Nxt = Pilha->Top;
-	Pilha->Top = pointer;
-	Pilha->size += 10;
-	if (Pilha->size > 30)
-		Pilha->size = 30;
+
+// Confere se a pilha esta vazia
+int pilhaVazia (tPilha Pilha) {
+	printf("sizeof\n");
+	return (Pilha.Top == Pilha.Bottom);
 }
 // .
+
+// Empilha novas bandejas
+void empilhaBandeja (tPilha *Pilha, int qtd) {
+	int i = 0;
+	for (i = 0; i < qtd; i++) {
+		if (Pilha->size < 30) {
+			pPilha pointer  = (tCPilha *)malloc(sizeof(tCPilha));
+			pointer->Nxt = Pilha->Top;
+			Pilha->Top = pointer;
+			Pilha->size++;
+		}
+	}
+}
+// .
+
 // Desempilha uma bandeja
-void desempilhaBandeja (tPilha *Pilha, int *empty) {printf("essa funcao foi 8\n");
-	if (Pilha->Top == Pilha->Bottom) {
-		*empty = 1;	
-	}
-	else {
-		pPilha pointer = Pilha->Top;
-		Pilha->Top = pointer->Nxt;
-		free(pointer);
-		Pilha->size--;
-	}
+void desempilhaBandeja (tPilha *Pilha) {
+	pPilha pointer = Pilha->Top;
+	Pilha->Top = pointer->Nxt;
+	free(pointer);
+	Pilha->size--;
 }
 // .
