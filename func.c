@@ -88,7 +88,6 @@ void criaPilha (tPilha *Pilha) {
 
 // Confere se a pilha esta vazia
 int pilhaVazia (tPilha Pilha) {
-	printf("sizeof\n");
 	return (Pilha.Top == Pilha.Bottom);
 }
 // .
