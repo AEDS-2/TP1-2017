@@ -1,7 +1,7 @@
 /* ------ TADs - Fila */
 typedef struct tadCFila *pFila;
 typedef struct tadCFila {
-	int key;
+	int serving;
 	pFila Nxt;
 }tCFila;
 
@@ -12,10 +12,24 @@ typedef struct tadFila {
 /* ------ TADs - Pilha */
 typedef struct tadCPilha *pPilha;
 typedef struct tadCPilha {
-	int key;
 	pPilha Nxt;
 } tCPilha;
 typedef struct tadPilha {
 	pPilha Bottom, Top;
 	int size;
 } tPilha;
+
+/* ------ Cabecalho das funcoes */
+// Funcoes de Fila
+void criaFila (tFila *Fila);
+void enfileiraPessoa (tFila *Fila, int qtd, int s);
+void desenfileiraPessoa (tFila *Fila);
+void servingTime (tFila *Fila, int *tamFila, int *contServ);
+// .
+
+// Funcoes de Pilha
+void criaPilha (tPilha *Pilha);
+void empilhaBandeja (tPilha *Pilha, int *empty);
+void desempilhaBandeja (tPilha *Pilha, int *empty);
+// .
+
